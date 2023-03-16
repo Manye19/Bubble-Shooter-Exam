@@ -13,6 +13,8 @@ public class PlayerControl : MonoBehaviour
     public Camera mainCamera;
     private InputMaster inputMaster;
     public Transform barrelParent;
+    private GameObject projectileGo;
+    [HideInInspector] public Projectile projectileScript;
 
     public BubbleShotEvent onBubbleShotEvent = new();
     
@@ -43,16 +45,22 @@ public class PlayerControl : MonoBehaviour
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition) - transform.position;
         float rotationZ = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg - 90f;
         
-        // Clamped so as not to turn 360 degrees
+        // Clamped so as to limit the player; stop turning too much 
         rotationZ = Mathf.Clamp(rotationZ, -60, 60);
         transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
     }
     
     private void Shoot(InputAction.CallbackContext value)
     {
-        Debug.Log("Shoot!");
-        
-        Instantiate(GameManager.instance.selectedProjectile, barrelParent.position, barrelParent.rotation);
+        //Debug.Log("Shoot!");
+        if (projectileScript != null)
+        {
+            projectileScript.onBubbleHitEvent.RemoveAllListeners();
+            projectileScript = null;
+        }
+        projectileGo = Instantiate(GameManager.instance.selectedProjectile, barrelParent.position, barrelParent.rotation);
+        projectileScript = projectileGo.GetComponent<Projectile>();
+        projectileScript.onBubbleHitEvent.AddListener(GameManager.instance.BubbleTilemapHit);
         onBubbleShotEvent.Invoke();
     }
 }

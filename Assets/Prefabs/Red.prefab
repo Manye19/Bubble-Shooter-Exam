@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e9e107b76eead4db098ee78163bed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 3690309553366753772}
+  bubbleColor: 0
 --- !u!58 &3358639585912755115
 CircleCollider2D:
   m_ObjectHideFlags: 0
