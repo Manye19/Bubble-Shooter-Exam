@@ -39,6 +39,7 @@ public class PlayerControl : MonoBehaviour
         Aim();
     }
     
+    #region Functions
     private void Aim()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
@@ -48,19 +49,17 @@ public class PlayerControl : MonoBehaviour
         // Clamped so as to limit the player; stop turning too much 
         rotationZ = Mathf.Clamp(rotationZ, -60, 60);
         transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-    }
-    
+    }    
     private void Shoot(InputAction.CallbackContext value)
     {
         //Debug.Log("Shoot!");
         if (projectileScript != null)
         {
-            projectileScript.onBubbleHitEvent.RemoveAllListeners();
             projectileScript = null;
         }
         projectileGo = Instantiate(GameManager.instance.selectedProjectile, barrelParent.position, barrelParent.rotation);
         projectileScript = projectileGo.GetComponent<Projectile>();
-        projectileScript.onBubbleHitEvent.AddListener(GameManager.instance.BubbleTilemapHit);
         onBubbleShotEvent.Invoke();
     }
+    #endregion
 }
