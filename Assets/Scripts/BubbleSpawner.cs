@@ -18,7 +18,7 @@ public class BubbleSpawner : MonoBehaviour
         foreach (GameObject go in bubbleSpawnpoints)
         {
             projectileGo = GameManager.instance.RandomProjectile();
-            instantiatedObject = Instantiate(projectileGo, go.transform.position, go.transform.rotation); 
+            instantiatedObject = Instantiate(projectileGo, go.transform.position, go.transform.rotation);
             instantiatedObject.transform.SetParent(bubbleParent.transform);
             GameManager.instance.bubblesList.Add(instantiatedObject);
             instantiatedObjectRb = instantiatedObject.GetComponent<Rigidbody2D>();
